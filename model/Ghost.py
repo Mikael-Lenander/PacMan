@@ -7,24 +7,22 @@ class Ghost(Character):
   SLOW_DOWN_FACTOR = 1.5
   BEST_DIRECTION_PROBABILITY = 0.7
   def __init__(self, grid, col, row):
-    super().__init__(grid, col * SQUARE_STEPS + SQUARE_STEPS // 2, row * SQUARE_STEPS + SQUARE_STEPS // 2, (0, 0))
-    self.steps_to_start = random.randint(0, 30) * SQUARE_STEPS
+    super().__init__(grid, col, row, (0, 0))
+    self.direction = self.best_direction_towards_pacman()
 
   def update(self):
-    # if (self.grid.step_count < self.steps_to_start): 
-      # return
     dx, dy = self.direction
     self.y += dy / self.SLOW_DOWN_FACTOR
     self.x += dx / self.SLOW_DOWN_FACTOR
     if self.grid.is_intersection(self.col(), self.row()) and self.grid.step_count % floor(SQUARE_STEPS * self.SLOW_DOWN_FACTOR) == 0:
       new_direction = self.best_direction_towards_pacman() if random.random() < self.BEST_DIRECTION_PROBABILITY else self.random_direction()
-      # new_direction = self.best_direction_towards_pacman()
       self.direction = new_direction
+      self.center_sideways(new_direction)
 
   # Implemented with Dijkstra's algorithm
   def best_direction_towards_pacman(self):
     nodes = self.grid.nodes()
-    source = (self.col(), self.row())
+    source = self.location
     target = self.grid.pacman.location
     dist = {}
     prev = {}

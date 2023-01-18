@@ -2,8 +2,8 @@ from .PacManGrid import PacManGrid
 from constants import GRID
 
 class Game:
-  def __init__(self):
-    self.grid = PacManGrid(GRID)
+  def __init__(self, map=GRID):
+    self.grid = PacManGrid(map)
     self.lives = 3
   
   def is_lost(self):
