@@ -5,7 +5,7 @@ from .Character import Character
 
 class Ghost(Character):
   SLOW_DOWN_FACTOR = 1.5
-  BEST_DIRECTION_PROBABILITY = 0.75
+  BEST_DIRECTION_PROBABILITY = 0.7
   def __init__(self, grid, col, row):
     super().__init__(grid, col * SQUARE_STEPS + SQUARE_STEPS // 2, row * SQUARE_STEPS + SQUARE_STEPS // 2, (0, 0))
     self.steps_to_start = random.randint(0, 30) * SQUARE_STEPS
